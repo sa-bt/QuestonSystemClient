@@ -280,7 +280,9 @@
     export default {
         name: "index"
     }
+
 </script>
+<style scoped>
 body{
 margin-top:20px;
 color: #1a202c;
@@ -408,6 +410,5 @@ flex: 1 1 auto;
 min-height: 1px;
 padding: 1rem;
 }
-<style scoped>
 
 </style>
