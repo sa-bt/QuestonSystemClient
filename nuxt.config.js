@@ -15,6 +15,8 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    "bootstrap/dist/css/bootstrap.min.css",
+    "bootstrap-icons/font/bootstrap-icons.css"
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -38,7 +40,10 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL:'http://localhost:8000',
+    credentials:true
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
