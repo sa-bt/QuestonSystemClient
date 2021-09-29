@@ -73,16 +73,27 @@
               <!--All Threads -->
               <Thread v-for="thread in threads" :key="thread.id" :thread="thread"/>
 
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item" @click="previousPage">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item" v-for="p in this.lastPage" :key="p" @click="changePage(p)"><a class="page-link"
+                                                                                                      href="#">{{p}}</a>
+                  </li>
+                  <li class="page-item" @click="nextPage">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
 
-              <ul class="pagination pagination-sm pagination-circle justify-content-center mb-0">
-                <li class="page-item disabled"><span class="page-link has-icon"><i
-                  class="material-icons">chevron_left</i></span></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0)">1</a></li>
-                <li class="page-item active"><span class="page-link">2</span></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-                <li class="page-item"><a class="page-link has-icon" href="javascript:void(0)"><i class="material-icons">chevron_right</i></a>
-                </li>
-              </ul>
+
             </div>
             <div class="inner-main-body p-2 p-sm-3 collapse forum-content"><a href="#"
                                                                               class="btn btn-light btn-sm mb-3 has-icon"
@@ -172,7 +183,6 @@
         components: {Thread},
         data() {
             return {
-                page: 1,
                 loading: true,
                 searchInput: '',
                 form: {
@@ -184,8 +194,11 @@
         computed: {
             ...mapGetters({
                 threads: 'threads/threads',
+                page: 'threads/page',
+                lastPage: 'threads/lastPage',
             })
         },
+
         methods: {
             ...mapMutations({
                 SET_TASKS: 'threads/SET_LIKES'
@@ -201,13 +214,24 @@
 
             createNewThread() {
                 this.createThread(this.form)
+            },
+            changePage(page) {
+                this.getThreads(page)
+            },
+            nextPage() {
+                if (this.page < this.lastPage) {
+                    this.getThreads(this.page+1)
+                }
+            },
+            previousPage() {
+                if (this.page > 1) {
+                    this.getThreads(this.page-1)
+                }
             }
 
         },
-
         mounted() {
-
-            this.getThreads()
+            this.getThreads(this.page)
         },
     }
 

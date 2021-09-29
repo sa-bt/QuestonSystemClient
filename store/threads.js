@@ -3,19 +3,29 @@ export default {
   state() {
     return {
       threads: [],
-      search: []
+      search: [],
+      page: 1,
+      lastPage: 1
     }
   },
 
   getters: {
     threads(state) {
       return state.threads
-    }
+    },
+    page(state) {
+      return state.page
+    },
+    lastPage(state) {
+      return state.lastPage
+    },
   },
 
   mutations: {
     SET_THREADS(state, threads) {
-      state.threads = threads
+      state.threads = threads.data,
+        state.page = threads.current_page,
+        state.lastPage = threads.last_page
     },
     APPEND_THREAD(state, thread) {
       state.threads = [...state.threads, thread]
@@ -35,8 +45,9 @@ export default {
 
   actions: {
 
-    async getThreads({commit}) {
-      let threads = await this.$axios.get('api/threads')
+    async getThreads({commit}, page) {
+      console.log(page)
+      let threads = await this.$axios.get(`api/threads?page=${page}`)
       commit('SET_THREADS', threads.data)
     },
 
@@ -76,11 +87,11 @@ export default {
       Swal.fire({
         title: 'thread is done',
         icon: 'success',
-        position:"top",
-        timerProgressBar:true,
-        timer:3000,
-        showConfirmButton:false,
-        toast:true
+        position: "top",
+        timerProgressBar: true,
+        timer: 3000,
+        showConfirmButton: false,
+        toast: true
       })
     }
     ,
@@ -91,11 +102,11 @@ export default {
       Swal.fire({
         title: 'thread is changed',
         icon: 'success',
-        position:"top",
-        timerProgressBar:true,
-        timer:3000,
-        showConfirmButton:false,
-        toast:true
+        position: "top",
+        timerProgressBar: true,
+        timer: 3000,
+        showConfirmButton: false,
+        toast: true
       })
     }
   }
