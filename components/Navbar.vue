@@ -12,16 +12,22 @@
       <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
     </ul>
 
-    <div class="col-md-3 text-end">
-      <NuxtLink :to="{name:'login'}"  class="btn btn-outline-primary me-2">Login</NuxtLink>
-      <NuxtLink :to="{name:'register'}" type="button" class="btn btn-primary">Sign-up</NuxtLink>
+    <div class="col-md-3 text-end" >
+      <a  @click.prevent="logout" class="btn btn-outline-primary me-2" v-if="$auth.loggedIn">Logout</a>
+      <NuxtLink :to="{name:'login'}"  class="btn btn-outline-primary me-2" v-if="!$auth.loggedIn">Login</NuxtLink>
+      <NuxtLink :to="{name:'register'}" type="button" class="btn btn-primary" v-if="!$auth.loggedIn">Sign-up</NuxtLink>
     </div>
   </header>
 </template>
 
 <script>
     export default {
-        name: "Navbar"
+        name: "Navbar",
+        methods:{
+            logout(){
+                this.$auth.logout();
+            }
+        }
     }
 </script>
 
