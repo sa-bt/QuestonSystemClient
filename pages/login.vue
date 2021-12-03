@@ -1,37 +1,101 @@
 <template>
-  <form class="p-4 p-md-5 border rounded-3 bg-light">
-    <div class="form-floating mb-3">
-      <input type="email" class="form-control" id="floatingInput" v-model="form.email" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
-    </div>
-    <div class="form-floating mb-3">
-      <input type="password" class="form-control" id="floatingPassword" v-model="form.password" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
-    </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit" @click.prevent="login">Login</button>
-    <hr class="my-4">
-    <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
-  </form>
+        <v-form
+          ref="form"
+          v-model="valid"
+          lazy-validation
+        >
+          <v-text-field
+            v-model="password"
+            :counter="10"
+            :rules="passwordRules"
+            label="Name"
+            required
+          ></v-text-field>
+
+          <v-text-field
+            v-model="email"
+            :rules="emailRules"
+            label="E-mail"
+            required
+          ></v-text-field>
+
+          <v-select
+            v-model="select"
+            :items="items"
+            :rules="[v => !!v || 'Item is required']"
+            label="Item"
+            required
+          ></v-select>
+
+          <v-checkbox
+            v-model="checkbox"
+            :rules="[v => !!v || 'You must agree to continue!']"
+            label="Do you agree?"
+            required
+          ></v-checkbox>
+
+          <v-btn
+            :disabled="!valid"
+            color="success"
+            class="mr-4"
+            @click="validate"
+          >
+            Validate
+          </v-btn>
+
+          <v-btn
+            color="error"
+            class="mr-4"
+            @click="reset"
+          >
+            Reset Form
+          </v-btn>
+
+          <v-btn
+            color="warning"
+            @click="resetValidation"
+          >
+            Reset Validation
+          </v-btn>
+        </v-form>
+
 </template>
 
 <script>
     export default {
         name: "login",
+        data: () => ({
+            valid: true,
+            password: '',
+            passwordRules: [
+                v => !!v || 'Name is required',
+                v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+            ],
+            email: '',
+            emailRules: [
+                v => !!v || 'E-mail is required',
+                v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+            ],
+            select: null,
+            items: [
+                'Item 1',
+                'Item 2',
+                'Item 3',
+                'Item 4',
+            ],
+            checkbox: false,
+        }),
 
-        data() {
-            return {
-                form: {
-                    email: null,
-                    password: null
-                }
-            }
-        },
         methods: {
+            validate() {
+                this.$refs.form.validate()
+            },
+            reset() {
+                this.$refs.form.reset()
+            },
+            resetValidation() {
+                this.$refs.form.resetValidation()
+            },
             async login() {
                 try {
                     await this.$auth.loginWith('laravelSanctum', {
@@ -45,7 +109,8 @@
                 }
 
             }
-        }
+        },
+
     }
 </script>
 
