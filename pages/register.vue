@@ -1,29 +1,65 @@
 <template>
-  <form class="p-4 p-md-5 border rounded-3 bg-light">
-    <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="name" v-model="form.name" placeholder="your name is ...">
-      <label for="name">Name</label>
-    </div>
+  <div class="mt-16">
+    <v-toolbar class="mb-10 justify-center">
+      <v-toolbar-title >Login</v-toolbar-title>
+    </v-toolbar>
+    <v-form
+      ref="form"
+      v-model="valid"
+      lazy-validation
+    >
+      <v-text-field
+        v-model="password"
+        :counter="10"
+        :rules="passwordRules"
+        label="Name"
+        required
+      >
 
-    <div class="form-floating mb-3">
-      <input type="email" class="form-control" id="floatingInput" v-model="form.email" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
-    </div>
 
-    <div class="form-floating mb-3">
-      <input type="password" class="form-control" id="floatingPassword" v-model="form.password" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
+      </v-text-field><v-text-field
+        v-model="password"
+        :counter="10"
+        :rules="passwordRules"
+        label="Name"
+        required
+      ></v-text-field>
 
-    <div class="form-floating mb-3">
-      <input type="password" class="form-control" id="Password" v-model="form.password" placeholder="Password">
-      <label for="Password">Password</label>
-    </div>
+      <v-text-field
+        v-model="email"
+        :rules="emailRules"
+        label="E-mail"
+        required
+      ></v-text-field>
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit" @click.prevent="register">Sign up</button>
-    <hr class="my-4">
-    <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
-  </form>
+      <v-input
+
+      <v-btn
+        :disabled="!valid"
+        color="success"
+        class="mr-4"
+        @click="validate"
+      >
+        Validate
+      </v-btn>
+
+      <v-btn
+        color="error"
+        class="mr-4"
+        @click="reset"
+      >
+        Reset Form
+      </v-btn>
+
+      <v-btn
+        color="warning"
+        @click="resetValidation"
+      >
+        Reset Validation
+      </v-btn>
+    </v-form>
+
+  </div>
 </template>
 
 <script>
