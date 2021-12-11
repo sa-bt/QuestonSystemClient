@@ -1,23 +1,15 @@
 <template>
-<!--  <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">-->
-<!--    <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">-->
-<!--      <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>-->
-<!--    </a>-->
+  <v-app-bar
+    color="deep-purple"
+    dark
+  >
+    <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
-<!--    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">-->
-<!--      <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>-->
-<!--      <li><NuxtLink :to="{name:'threads'}" class="nav-link px-2 link-dark">Threads</NuxtLink></li>-->
-<!--      <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>-->
-<!--      <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>-->
-<!--      <li><a href="#" class="nav-link px-2 link-dark">About</a></li>-->
-<!--    </ul>-->
+    <v-toolbar-title>Title</v-toolbar-title>
+  </v-app-bar>
 
-<!--    <div class="col-md-3 text-end" >-->
-<!--      <a  @click.prevent="logout" class="btn btn-outline-primary me-2" v-if="$auth.loggedIn">Logout</a>-->
-<!--      <NuxtLink :to="{name:'login'}"  class="btn btn-outline-primary me-2" v-if="!$auth.loggedIn">Login</NuxtLink>-->
-<!--      <NuxtLink :to="{name:'register'}" type="button" class="btn btn-primary" v-if="!$auth.loggedIn">Sign-up</NuxtLink>-->
-<!--    </div>-->
-<!--  </header>-->
+
+
 </template>
 
 <script>

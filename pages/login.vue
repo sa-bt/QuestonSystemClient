@@ -10,34 +10,19 @@
 
   >
     <v-text-field
-      v-model="password"
-      :counter="10"
-      :rules="passwordRules"
-      label="Name"
-      required
-    ></v-text-field>
-
-    <v-text-field
       v-model="email"
       :rules="emailRules"
       label="E-mail"
       required
     ></v-text-field>
 
-    <v-select
-      v-model="select"
-      :items="items"
-      :rules="[v => !!v || 'Item is required']"
-      label="Item"
+    <v-text-field
+      v-model="password"
+      :counter="10"
+      :rules="passwordRules"
+      label="password"
       required
-    ></v-select>
-
-    <v-checkbox
-      v-model="checkbox"
-      :rules="[v => !!v || 'You must agree to continue!']"
-      label="Do you agree?"
-      required
-    ></v-checkbox>
+    ></v-text-field>
 
     <v-btn
       :disabled="!valid"
@@ -62,6 +47,12 @@
     >
       Reset Validation
     </v-btn>
+    <v-btn
+      color="info"
+      @click="login"
+    >
+      Login
+    </v-btn>
   </v-form>
 
 </div>
@@ -83,14 +74,6 @@
                 v => !!v || 'E-mail is required',
                 v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
             ],
-            select: null,
-            items: [
-                'Item 1',
-                'Item 2',
-                'Item 3',
-                'Item 4',
-            ],
-            checkbox: false,
         }),
 
         methods: {
@@ -104,11 +87,13 @@
                 this.$refs.form.resetValidation()
             },
             async login() {
+              console.log(66,
+              this.email,this.password)
                 try {
                     await this.$auth.loginWith('laravelSanctum', {
                         data: {
-                            email: this.form.email,
-                            password: this.form.password
+                            email: this.email,
+                            password: this.password
                         }
                     })
                 } catch (e) {
